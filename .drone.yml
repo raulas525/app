@@ -1,0 +1,22 @@
+---
+kind: pipeline
+type: exec
+name: Scale Pipeline Aura
+
+platform:
+  os: linux
+  arch: amd64
+  
+steps:
+- name: Turn On Aura
+  commands:
+  - export KUBECONFIG="/home/devops/.kube/config"
+  - kubens ges-default-azure-dev
+  - kubectl scale statefulsets -n ges-default-azure-dev --replicas=1 --all
+  
+- name: Turn On Aura
+  commands:
+  - export KUBECONFIG="/home/devops/.kube/config"
+  - kubens ges-default-azure-dev
+  - kubectl scale deploy -n ges-default-azure-dev --replicas=0 --all
+  - kubectl scale statefulsets -n ges-default-azure-dev --replicas=0 --all
